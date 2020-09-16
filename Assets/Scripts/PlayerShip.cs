@@ -7,6 +7,10 @@ public class PlayerShip : MonoBehaviour
 
     [SerializeField] float _moveSpeed = 12f;
     [SerializeField] float _turnSpeed = 3f;
+    [SerializeField] float _deathTimer = 10;
+
+    [Header("Feedback")]
+    [SerializeField] TrailRenderer _trail = null;
 
     public GameObject goToEnable;
 
@@ -15,13 +19,18 @@ public class PlayerShip : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+
+        _trail.enabled = false;
     }
 
     private void FixedUpdate()
     {
-        MoveShip();
-        TurnShip();
-        ParticleShip();
+        if (this.isActiveAndEnabled)
+        {
+            MoveShip();
+            TurnShip();
+            ParticleShip();
+        }
     }
 
     void MoveShip()
@@ -58,5 +67,20 @@ public class PlayerShip : MonoBehaviour
     {
         Debug.Log("Player has been killed.");
         this.gameObject.SetActive(false);
+    }
+
+    public float getDeathTimer()
+    {
+        return _deathTimer;
+    }
+
+    public void SetSpeed(float speedChange)
+    {
+        _moveSpeed += speedChange;
+    }
+
+    public void SetBoosters(bool activateState)
+    {
+        _trail.enabled = activateState;
     }
 }
