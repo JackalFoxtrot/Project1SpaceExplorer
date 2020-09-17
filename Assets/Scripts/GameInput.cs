@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameInput : MonoBehaviour
 {
+    public PlayerShip playerShip;
     // Update is called once per frame
     void Update()
     {
+        if (playerShip.getRocketsBool() && Input.GetKeyDown(KeyCode.F))
+        {
+            playerShip.Powerups();
+        }
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             ReloadLevel();

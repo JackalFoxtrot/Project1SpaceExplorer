@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerShip : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class PlayerShip : MonoBehaviour
     [SerializeField] TrailRenderer _trail = null;
 
     public GameObject goToEnable;
+    public GameObject _rocketModel;
 
     Rigidbody _rb = null;
+    bool _rockets = false;
 
     private void Awake()
     {
@@ -63,6 +66,19 @@ public class PlayerShip : MonoBehaviour
         }
     }
 
+    public void Powerups()
+    {   
+        float spawnDistance = 3;
+        Vector3 playerPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Vector3 spawnPosition = playerPosition + transform.forward*spawnDistance;
+        
+        Quaternion spawnRotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
+        
+        GameObject newRocket = GameObject.Instantiate(_rocketModel, spawnPosition, spawnRotation);
+        newRocket.GetComponent<RocketScript>().enabled = true;
+        newRocket.SetActive(true);
+    }
+
     public void Kill()
     {
         Debug.Log("Player has been killed.");
@@ -79,7 +95,10 @@ public class PlayerShip : MonoBehaviour
     {
         return _deathTimer;
     }
-
+    public bool getRocketsBool()
+    {
+        return _rockets;
+    }
     public void SetSpeed(float speedChange)
     {
         _moveSpeed += speedChange;
@@ -88,5 +107,10 @@ public class PlayerShip : MonoBehaviour
     public void SetBoosters(bool activateState)
     {
         _trail.enabled = activateState;
+    }
+    public void SetRockets(bool activateState)
+    {
+        Debug.Log("Rockets set to: " + activateState);
+        _rockets = activateState;
     }
 }
