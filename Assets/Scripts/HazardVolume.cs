@@ -26,14 +26,12 @@ public class HazardVolume : MonoBehaviour
         if (playerShip != null)
         {
             playerShip.Kill();
-            StartCoroutine(RestartGame(playerShip));
+            DelayHelper.DelayAction(this, RestartGame, playerShip.getDeathTimer());
         }
     }
 
-    IEnumerator RestartGame(PlayerShip playerShip)
+    void RestartGame()
     {
-        yield return new WaitForSeconds(playerShip.getDeathTimer());
-
         int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(activeSceneIndex);
     }

@@ -13,7 +13,7 @@ public class RocketScript : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        StartCoroutine(DestroyRocket());
+        DelayHelper.DelayAction(this, DestroyRocket,_rocketDuration);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,9 +51,8 @@ public class RocketScript : MonoBehaviour
 
         _rb.AddForce(moveDirection);
     }
-    IEnumerator DestroyRocket()
+    void DestroyRocket()
     {
-        yield return new WaitForSeconds(_rocketDuration);
         Object.Destroy(this.gameObject);
     }
 }

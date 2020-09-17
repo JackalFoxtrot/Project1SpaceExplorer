@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class PlayerShip : MonoBehaviour
@@ -8,10 +9,17 @@ public class PlayerShip : MonoBehaviour
 
     [SerializeField] float _moveSpeed = 12f;
     [SerializeField] float _turnSpeed = 3f;
-    [SerializeField] float _deathTimer = 10;
+    [SerializeField] float _deathTimer = 2;
 
     [Header("Feedback")]
     [SerializeField] TrailRenderer _trail = null;
+    [SerializeField] UIController _uiController = null;
+    [SerializeField] GameObject _uiControllerObj = null;
+    [SerializeField] AudioClip _deathSound = null;
+    [SerializeField] GameObject _visualsToDeactivate = null;
+    [SerializeField] GameObject _visualsToActivate = null;
+
+    Collider _colliderToDeactivate = null;
 
     public GameObject goToEnable;
     public GameObject _rocketModel;
@@ -22,13 +30,14 @@ public class PlayerShip : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _colliderToDeactivate = GetComponent<Collider>();
 
         _trail.enabled = false;
     }
 
     private void FixedUpdate()
     {
-        if (this.isActiveAndEnabled)
+        if (_colliderToDeactivate.enabled == true)
         {
             MoveShip();
             TurnShip();
@@ -38,6 +47,7 @@ public class PlayerShip : MonoBehaviour
 
     void MoveShip()
     {
+
         float moveAmountThisFrame = Input.GetAxisRaw("Vertical") * _moveSpeed;
 
         Vector3 moveDirection = transform.forward * moveAmountThisFrame;
@@ -82,7 +92,16 @@ public class PlayerShip : MonoBehaviour
     public void Kill()
     {
         Debug.Log("Player has been killed.");
-        this.gameObject.SetActive(false);
+        
+        _uiController.SetText("You have died.");
+        _uiControllerObj.SetActive(true);
+        
+        AudioHelper.PlayClip2D(_deathSound, 1);
+
+        _visualsToDeactivate.SetActive(false);
+        _visualsToActivate.SetActive(true);
+        this.SetSpeed(0);
+        _colliderToDeactivate.enabled = false;
     }
 
     public void Win()

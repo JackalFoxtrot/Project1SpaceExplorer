@@ -11,6 +11,8 @@ public class PowerupSpeed : MonoBehaviour
 
     [Header("Setup")]
     [SerializeField] GameObject _visualsToDeactivate = null;
+    [SerializeField] AudioClip _pickUp = null;
+    [SerializeField] AudioClip _powerDown = null;
 
     Collider _colliderToDeactivate = null;
     bool _poweredUp = false;
@@ -28,6 +30,7 @@ public class PowerupSpeed : MonoBehaviour
 
         if (playerShip != null && _poweredUp == false)
         {
+            AudioHelper.PlayClip2D(_pickUp,1);
             StartCoroutine(PowerupSquence(playerShip));
         }
     }
@@ -42,6 +45,7 @@ public class PowerupSpeed : MonoBehaviour
         yield return new WaitForSeconds(_powerupDuration);
 
         DeactivatePowerUp(playerShip);
+        AudioHelper.PlayClip2D(_powerDown, 1);
         EnableObject();
 
         _poweredUp = false;

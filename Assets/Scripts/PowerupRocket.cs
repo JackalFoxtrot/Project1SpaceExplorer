@@ -9,6 +9,8 @@ public class PowerupRocket : MonoBehaviour
 
     [Header("Setup")]
     [SerializeField] GameObject _visualsToDeactivate = null;
+    [SerializeField] AudioClip _pickUp = null;
+    [SerializeField] AudioClip _powerDown = null;
 
     Collider _colliderToDeactivate = null;
     bool _poweredUp = false;
@@ -24,6 +26,7 @@ public class PowerupRocket : MonoBehaviour
 
         if (playerShip != null && _poweredUp == false)
         {
+            AudioHelper.PlayClip2D(_pickUp,1);
             StartCoroutine(PowerupSquence(playerShip));
         }
     }
@@ -31,13 +34,14 @@ public class PowerupRocket : MonoBehaviour
     IEnumerator PowerupSquence(PlayerShip playerShip)
     {
         _poweredUp = true;
-
+       
         ActivatePowerup(playerShip);
         DisableObject();
 
         yield return new WaitForSeconds(_powerupDuration);
 
         DeactivatePowerUp(playerShip);
+        AudioHelper.PlayClip2D(_powerDown, 1);
         EnableObject();
 
         _poweredUp = false;
