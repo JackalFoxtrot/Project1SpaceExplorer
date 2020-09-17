@@ -69,6 +69,12 @@ public class PlayerShip : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    public void Win()
+    {
+        Debug.Log("Player has won the game.");
+        this.gameObject.SetActive(false);
+    }
+
     public float getDeathTimer()
     {
         return _deathTimer;
