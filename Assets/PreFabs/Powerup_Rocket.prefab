@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f767414a5466647b41858b11709c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _powerupDuration: 30
-  _visualsToDeactivate: {fileID: 0}
+  _powerupDuration: 17
+  _visualsToDeactivate: {fileID: 5948284961054664750}
   _pickUp: {fileID: 8300000, guid: 528ff3bf5189c4c498a8ebcad5d9cfe2, type: 3}
   _powerDown: {fileID: 8300000, guid: f4af69b546520ea4ca4f1066ee985de6, type: 3}
 --- !u!1 &5948284962451138661

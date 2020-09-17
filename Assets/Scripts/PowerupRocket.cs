@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerupRocket : MonoBehaviour
 {
     [Header("Powerup Settings")]
-    [SerializeField] float _powerupDuration = 30;
+    [SerializeField] float _powerupDuration = 17;
 
     [Header("Setup")]
     [SerializeField] GameObject _visualsToDeactivate = null;

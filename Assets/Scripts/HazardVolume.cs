@@ -7,15 +7,17 @@ public class HazardVolume : MonoBehaviour
 {
     [Header("Hazard's Base Stats")]
     [SerializeField] float _moveSpeed = 3f;
-    [SerializeField] float _stunTimer = 5;
+    [SerializeField] float _stunTimer = 1;
 
     Rigidbody _rb = null;
     public Transform playerShip;
-    private bool stunned = false;
+
+    private float _moveSpeedFinal;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _moveSpeedFinal = _moveSpeed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,33 +40,22 @@ public class HazardVolume : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (this.isActiveAndEnabled)
-        {
-            MoveEnemy();
-        }
+        MoveEnemy();
     }
 
     void MoveEnemy()
     {
-        if(stunned)
-        {
-            StartCoroutine(StunDuration());
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, playerShip.position, _moveSpeed * Time.deltaTime);
-        }
+        transform.position = Vector3.MoveTowards(transform.position, playerShip.position, _moveSpeedFinal * Time.deltaTime);
     }
 
-    IEnumerator StunDuration()
+    public void Stun()
     {
-        yield return new WaitForSeconds(_stunTimer);
-        stunned = false;
+        _moveSpeedFinal = 0;
+        DelayHelper.DelayAction(this, ResetMoveSpeed, _stunTimer);
     }
 
-    public void setStun(bool stunValue)
+    void ResetMoveSpeed()
     {
-        stunned = stunValue;
+        _moveSpeedFinal = _moveSpeed;
     }
-
 }

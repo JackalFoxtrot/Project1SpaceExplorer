@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &52976342
 Transform:
   m_ObjectHideFlags: 0
@@ -5059,8 +5059,9 @@ MonoBehaviour:
   _uiController: {fileID: 0}
   _uiControllerObj: {fileID: 0}
   _deathSound: {fileID: 8300000, guid: ca3b2bf0294b5ba4f9801a09110b1408, type: 3}
+  _engineSound: {fileID: 0}
   _visualsToDeactivate: {fileID: 8910822435879264806}
-  _visualsToActivate: {fileID: 0}
+  _visualsToActivate: {fileID: 52976341}
   goToEnable: {fileID: 8910822435412570584}
   _rocketModel: {fileID: 8910822435576934441}
 --- !u!1 &8910822435112920411

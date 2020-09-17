@@ -16,6 +16,7 @@ public class PlayerShip : MonoBehaviour
     [SerializeField] UIController _uiController = null;
     [SerializeField] GameObject _uiControllerObj = null;
     [SerializeField] AudioClip _deathSound = null;
+    [SerializeField] GameObject _engineSound = null;
     [SerializeField] GameObject _visualsToDeactivate = null;
     [SerializeField] GameObject _visualsToActivate = null;
 
@@ -47,7 +48,6 @@ public class PlayerShip : MonoBehaviour
 
     void MoveShip()
     {
-
         float moveAmountThisFrame = Input.GetAxisRaw("Vertical") * _moveSpeed;
 
         Vector3 moveDirection = transform.forward * moveAmountThisFrame;
@@ -68,10 +68,12 @@ public class PlayerShip : MonoBehaviour
     {
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
+            _engineSound.SetActive(false);
             goToEnable.SetActive(false);
         }
         else
         {
+            _engineSound.SetActive(true);
             goToEnable.SetActive(true);
         }
     }
@@ -91,6 +93,7 @@ public class PlayerShip : MonoBehaviour
 
     public void Kill()
     {
+        Vector3 deathpos = this.transform.position;
         Debug.Log("Player has been killed.");
         
         _uiController.SetText("You have died.");
@@ -100,7 +103,7 @@ public class PlayerShip : MonoBehaviour
 
         _visualsToDeactivate.SetActive(false);
         _visualsToActivate.SetActive(true);
-        this.SetSpeed(0);
+        this.GetComponent<Rigidbody>().drag = 50;
         _colliderToDeactivate.enabled = false;
     }
 

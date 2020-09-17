@@ -27,7 +27,7 @@ public class RocketScript : MonoBehaviour
         }
         else if(hv != null)
         {
-            hv.setStun(true);
+            hv.Stun();
             Object.Destroy(this.gameObject);
         }
         else
